@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  eureka-server:
+    image: eureka-server:1.0
+    build:
+      context: ./Eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-network
+
+  api-gateway:
+    image: api-gateway:1.0
+    build:
+      context: ./Api-Gateway
+    ports:
+      - "8015:8015"
+    networks:
+      - microservices-network
+    environment:
+      - EUREKA_SERVER_URI=http://eureka-server:8761/eureka/
+      - PATIENT_SERVICE_URI=http://patient-service:8011
+      - PRATICIEN_SERVICE_URI=http://praticien-service:8012
+      - DOSSIERMEDICAL_SERVICE_URI=http://dossiermedical-service:8014
+
+  patient-service:
+    image: patient-service:1.0
+    build:
+      context: ./Patient-Service
+    ports:
+      - "8011:8011"
+    networks:
+      - microservices-network
+    environment:
+      - EUREKA_SERVER_URI=http://eureka-server:8761/eureka/
+      - DOSSIERMEDICAL_SERVICE_URI=http://dossiermedical-service:8014
+      
+
+  praticien-service:
+    image: praticien-service:1.0
+    build:
+      context: ./Praticien-Service
+    ports:
+      - "8012:8012"
+    networks:
+      - microservices-network
+    environment:
+      - EUREKA_SERVER_URI=http://eureka-server:8761/eureka/
+      - DOSSIERMEDICAL_SERVICE_URI=http://dossiermedical-service:8014
+      
+
+  dossiermedical-service:
+    image: dossiermedical-service:1.0
+    build:
+      context: ./DossierMedical-Service
+    ports:
+      - "8014:8014"
+    networks:
+      - microservices-network
+    environment:
+      - EUREKA_SERVER_URI=http://eureka-server:8761/eureka/
+     
+
+  rendezvous-service:
+    image: rendezvous-service:1.0
+    build:
+      context: ./Rendezvous-Service
+    ports:
+      - "8013:8013"
+    networks:
+      - microservices-network
+    environment:
+      - EUREKA_SERVER_URI=http://eureka-server:8761/eureka/
+      - RENDEZVOUS_SERVICE_URI=http://rendezvous-service:8013
+
+networks:
+  microservices-network:
+    driver: bridge

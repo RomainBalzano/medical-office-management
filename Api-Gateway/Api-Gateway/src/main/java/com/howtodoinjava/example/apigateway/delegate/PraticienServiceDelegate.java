@@ -17,7 +17,10 @@ public class PraticienServiceDelegate {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String BASE_URL = "http://localhost:8012/swagger2-praticien-service/api/praticien";
+    private static final String BASE_URL = System.getenv("PRATICIEN_SERVICE_URI") != null
+            ? System.getenv("PRATICIEN_SERVICE_URI") + "/swagger2-praticien-service/api/praticien"
+            : "http://localhost:8012/swagger2-praticien-service/api/praticien";
+
 
     @HystrixCommand(fallbackMethod = "fallbackGetPraticienDetails")
     public JsonNode getPraticienDetails(int praticienId) {

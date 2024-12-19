@@ -19,7 +19,10 @@ public class DossierMedicalServiceDelegate {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String BASE_URL = "http://localhost:8014/swagger2-dossiermedical-service/api/dossierMedical/";
+    private static final String BASE_URL = System.getenv("EUREKA_SERVER_URI") != null
+            ? System.getenv("EUREKA_SERVER_URI").replace("/eureka/", "") + "/swagger2-dossiermedical-service/api/dossierMedical/"
+            : "http://localhost:8014/swagger2-dossiermedical-service/api/dossierMedical/";
+
 
     @HystrixCommand(fallbackMethod = "fallbackGetDossierMedical")
     public JsonNode getDossierMedical(int idPatient) {

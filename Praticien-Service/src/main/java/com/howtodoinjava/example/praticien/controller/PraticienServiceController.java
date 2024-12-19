@@ -1,10 +1,13 @@
 package com.howtodoinjava.example.praticien.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.howtodoinjava.example.praticien.beans.Praticien;
+import com.howtodoinjava.example.praticien.delegate.PraticienServiceDelegate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,9 @@ import java.util.List;
 public class PraticienServiceController {
 
     private final List<Praticien> praticien = new ArrayList<>();
+
+    @Autowired
+    private PraticienServiceDelegate praticienServiceDelegate;
 
     public PraticienServiceController() {
         praticien.add(new Praticien(1, "Praticien1"));
@@ -98,4 +104,12 @@ public class PraticienServiceController {
     public ResponseEntity<List<Praticien>> getAllPraticiens() {
         return ResponseEntity.ok(praticien);
     }
+
+    @ApiOperation(value = "Récupère les détails du dossier médical d'un praticien par l'ID du patient")
+    @GetMapping("/{patientId}/dossierMedical")
+    public ResponseEntity<JsonNode> getDossierMedicalByPatientId(@PathVariable int patientId) {
+        JsonNode dossierMedical = praticienServiceDelegate.getDossierMedicalByPatientId(patientId);
+        return ResponseEntity.ok(dossierMedical);
+    }
+
 }
