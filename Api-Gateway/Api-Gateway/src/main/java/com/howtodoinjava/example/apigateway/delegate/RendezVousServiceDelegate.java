@@ -19,7 +19,7 @@ public class RendezVousServiceDelegate {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String BASE_URL = "http://rendezvous-service/api/rendezVouss";
+    private static final String BASE_URL = "http://localhost:8013/swagger2-rendezvous-service/api/rendezVouss";
 
     @HystrixCommand(fallbackMethod = "fallbackGetAllRendezVouss")
     public JsonNode getAllRendezVouss() {
