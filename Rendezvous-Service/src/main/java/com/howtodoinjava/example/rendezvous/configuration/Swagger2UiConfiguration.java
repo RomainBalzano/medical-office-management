@@ -1,4 +1,4 @@
-package com.howtodoinjava.example.patient.configuration;
+package com.howtodoinjava.example.rendezvous.configuration;
 
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
