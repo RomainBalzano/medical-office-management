@@ -1,6 +1,7 @@
 package com.howtodoinjava.example.patient.beans;
 
 
+
 public class Patient {
 
     private int id;
@@ -14,16 +15,16 @@ public class Patient {
         this.id = id;
         this.name = name;
     }
-    public void setEmployeeId(int id) {
+    public void setPatientId(int id) {
         this.id = id;
     }
-    public void setEmployeeName(String name) {
+    public void setPatientName(String name) {
         this.name = name;
     }
-    public int getEmployeeId() {
+    public int getPatientId() {
         return this.id;
     }
-    public String getEmployeeName() {
+    public String getPatientName() {
         return this.name;
     }
 
