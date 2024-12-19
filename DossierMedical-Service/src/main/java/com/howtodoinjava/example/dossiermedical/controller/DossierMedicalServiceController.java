@@ -34,7 +34,11 @@ public class DossierMedicalServiceController {
     @ApiOperation(value = "Récupère un dossier médical par l'ID du patient")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Dossier médical récupéré avec succès"),
-            @ApiResponse(code = 404, message = "Dossier médical introuvable")
+            @ApiResponse(code = 400, message = "Requête invalide"),
+            @ApiResponse(code = 401, message = "Non autorisé"),
+            @ApiResponse(code = 403, message = "Accès interdit"),
+            @ApiResponse(code = 404, message = "Dossier médical introuvable"),
+            @ApiResponse(code = 500, message = "Erreur interne du serveur")
     })
     @GetMapping("/{idPatient}")
     public ResponseEntity<DossierMedical> getDossierMedical(@PathVariable int idPatient) {
@@ -45,16 +49,20 @@ public class DossierMedicalServiceController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @ApiOperation(value = "Ajoute un identifiant de rendez-vous à un dossier médical")
+    @ApiOperation(value = "Ajoute un ou plusieurs identifiants de rendez-vous à un dossier médical")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Rendez-vous ajouté avec succès"),
-            @ApiResponse(code = 404, message = "Dossier médical introuvable")
+            @ApiResponse(code = 200, message = "Rendez-vous ajoutés avec succès"),
+            @ApiResponse(code = 400, message = "Requête invalide"),
+            @ApiResponse(code = 401, message = "Non autorisé"),
+            @ApiResponse(code = 403, message = "Accès interdit"),
+            @ApiResponse(code = 404, message = "Dossier médical introuvable"),
+            @ApiResponse(code = 500, message = "Erreur interne du serveur")
     })
-    @PostMapping("/{idPatient}/rendezVous")
-    public ResponseEntity<Void> addRendezVousToDossier(@PathVariable int idPatient, @RequestBody int rendezVousId) {
+    @PutMapping("/{idPatient}/rendezVous")
+    public ResponseEntity<Void> addRendezVousToDossier(@PathVariable int idPatient, @RequestBody List<Integer> rendezVousIds) {
         for (DossierMedical dossier : dossiersMedicaux) {
             if (dossier.getIdPatient() == idPatient) {
-                dossier.ajouterRendezVousId(rendezVousId);
+                rendezVousIds.forEach(dossier::ajouterRendezVousId);
                 return ResponseEntity.ok().build();
             }
         }
@@ -63,7 +71,11 @@ public class DossierMedicalServiceController {
 
     @ApiOperation(value = "Récupère tous les dossiers médicaux")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Liste des dossiers médicaux récupérée avec succès")
+            @ApiResponse(code = 200, message = "Liste des dossiers médicaux récupérée avec succès"),
+            @ApiResponse(code = 400, message = "Requête invalide"),
+            @ApiResponse(code = 401, message = "Non autorisé"),
+            @ApiResponse(code = 403, message = "Accès interdit"),
+            @ApiResponse(code = 500, message = "Erreur interne du serveur")
     })
     @GetMapping
     public ResponseEntity<List<DossierMedical>> getAllDossiersMedicaux() {
