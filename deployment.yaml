@@ -1,0 +1,209 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka-server
+spec:
+  selector:
+    app: eureka-server
+  ports:
+    - protocol: TCP
+      port: 8761
+      targetPort: 8761
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka-server
+  template:
+    metadata:
+      labels:
+        app: eureka-server
+    spec:
+      containers:
+        - name: eureka-server
+          image: eureka-server:latest
+          ports:
+            - containerPort: 8761
+          env:
+            - name: EUREKA_SERVER_URI
+              value: "http://eureka-server:8761/eureka/"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway
+spec:
+  selector:
+    app: api-gateway
+  ports:
+    - protocol: TCP
+      port: 8015
+      targetPort: 8015
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: api-gateway:latest
+          ports:
+            - containerPort: 8015
+          env:
+            - name: EUREKA_SERVER_URI
+              value: "http://eureka-server:8761/eureka/"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dossiermedical-service
+spec:
+  selector:
+    app: dossiermedical-service
+  ports:
+    - protocol: TCP
+      port: 8014
+      targetPort: 8014
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dossiermedical-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dossiermedical-service
+  template:
+    metadata:
+      labels:
+        app: dossiermedical-service
+    spec:
+      containers:
+        - name: dossiermedical-service
+          image: dossiermedical-service:latest
+          ports:
+            - containerPort: 8014
+          env:
+            - name: EUREKA_SERVER_URI
+              value: "http://eureka-server:8761/eureka/"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: patient-service
+spec:
+  selector:
+    app: patient-service
+  ports:
+    - protocol: TCP
+      port: 8011
+      targetPort: 8011
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: patient-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: patient-service
+  template:
+    metadata:
+      labels:
+        app: patient-service
+    spec:
+      containers:
+        - name: patient-service
+          image: patient-service:latest
+          ports:
+            - containerPort: 8011
+          env:
+            - name: EUREKA_SERVER_URI
+              value: "http://eureka-server:8761/eureka/"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: praticien-service
+spec:
+  selector:
+    app: praticien-service
+  ports:
+    - protocol: TCP
+      port: 8012
+      targetPort: 8012
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: praticien-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: praticien-service
+  template:
+    metadata:
+      labels:
+        app: praticien-service
+    spec:
+      containers:
+        - name: praticien-service
+          image: praticien-service:latest
+          ports:
+            - containerPort: 8012
+          env:
+            - name: EUREKA_SERVER_URI
+              value: "http://eureka-server:8761/eureka/"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rendezvous-service
+spec:
+  selector:
+    app: rendezvous-service
+  ports:
+    - protocol: TCP
+      port: 8013
+      targetPort: 8013
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rendezvous-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rendezvous-service
+  template:
+    metadata:
+      labels:
+        app: rendezvous-service
+    spec:
+      containers:
+        - name: rendezvous-service
+          image: rendezvous-service:latest
+          ports:
+            - containerPort: 8013
+          env:
+            - name: EUREKA_SERVER_URI
+              value: "http://eureka-server:8761/eureka/"

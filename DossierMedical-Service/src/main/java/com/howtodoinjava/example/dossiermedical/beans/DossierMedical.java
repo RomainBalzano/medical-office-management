@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class DossierMedical {
 
-    private int idDossier; // Identifiant unique du dossier médical
-    private int idPatient; // Référence au patient associé
-    private List<Integer> rendezVousIds; // Liste des identifiants des rendez-vous associés
+    private int idDossier;
+    private int idPatient;
+    private List<Integer> rendezVousIds;
 
     public DossierMedical() {
         this.idDossier = 0;
