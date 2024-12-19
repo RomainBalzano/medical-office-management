@@ -21,9 +21,9 @@ public class RendezVousServiceController {
     private final List<RendezVous> rendezVouss = new ArrayList<>();
 
     public RendezVousServiceController() {
-        rendezVouss.add(new RendezVous(1, new Date(), 9, 30, 10, 30, "Consultation", 101, 201));
-        rendezVouss.add(new RendezVous(2, new Date(), 11, 0, 12, 0, "Urgence", 102, 202));
-        rendezVouss.add(new RendezVous(3, new Date(), 14, 0, 15, 0, "Suivi", 103, 203));
+        rendezVouss.add(new RendezVous(1, new Date(), 9, 30, 10, 30, "Consultation", 101, 201, "confirmé"));
+        rendezVouss.add(new RendezVous(2, new Date(), 11, 0, 12, 0, "Urgence", 102, 202, "annulé"));
+        rendezVouss.add(new RendezVous(3, new Date(), 14, 0, 15, 0, "Suivi", 103, 203, "en attente"));
     }
 
     @ApiOperation(value = "Récupère les détails d'un rendezVous par son ID")

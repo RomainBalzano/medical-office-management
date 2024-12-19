@@ -1,4 +1,4 @@
-package com.howtodoinjava.example.rendezvous.beans;
+package com.howtodoinjava.example.dossiermedical.beans;
 
 import java.util.Date;
 
