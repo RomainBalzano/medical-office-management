@@ -81,4 +81,19 @@ public class DossierMedicalServiceController {
     public ResponseEntity<List<DossierMedical>> getAllDossiersMedicaux() {
         return ResponseEntity.ok(dossiersMedicaux);
     }
+
+    @ApiOperation(value = "Supprime un dossier médical par l'ID du patient")
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "Dossier médical supprimé avec succès"),
+            @ApiResponse(code = 404, message = "Dossier médical introuvable"),
+            @ApiResponse(code = 500, message = "Erreur interne du serveur")
+    })
+    @DeleteMapping("/{idPatient}")
+    public ResponseEntity<Void> deleteDossierMedical(@PathVariable int idPatient) {
+        boolean removed = dossiersMedicaux.removeIf(dossier -> dossier.getIdPatient() == idPatient);
+        if (removed) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }
