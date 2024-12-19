@@ -3,22 +3,26 @@ package com.howtodoinjava.example.dossiermedical.beans;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Représente un dossier médical qui centralise les informations liées à un patient
+ * et ses rendez-vous avec les praticiens.
+ */
 public class DossierMedical {
 
-    private int idDossier;
-    private int idPatient;
-    private List<RendezVous> listeRendezVous;
+    private int idDossier; // Identifiant unique du dossier médical
+    private int idPatient; // Référence au patient associé
+    private List<Integer> rendezVousIds; // Liste des identifiants des rendez-vous associés
 
     public DossierMedical() {
         this.idDossier = 0;
         this.idPatient = 0;
-        this.listeRendezVous = new ArrayList<>();
+        this.rendezVousIds = new ArrayList<>();
     }
 
     public DossierMedical(int idDossier, int idPatient) {
         this.idDossier = idDossier;
         this.idPatient = idPatient;
-        this.listeRendezVous = new ArrayList<>();
+        this.rendezVousIds = new ArrayList<>();
     }
 
     public int getIdDossier() {
@@ -37,15 +41,15 @@ public class DossierMedical {
         this.idPatient = idPatient;
     }
 
-    public List<RendezVous> getListeRendezVous() {
-        return listeRendezVous;
+    public List<Integer> getRendezVousIds() {
+        return rendezVousIds;
     }
 
-    public void setListeRendezVous(List<RendezVous> listeRendezVous) {
-        this.listeRendezVous = listeRendezVous;
+    public void setRendezVousIds(List<Integer> rendezVousIds) {
+        this.rendezVousIds = rendezVousIds;
     }
 
-    public void ajouterRendezVous(RendezVous rendezVous) {
-        this.listeRendezVous.add(rendezVous);
+    public void ajouterRendezVousId(int rendezVousId) {
+        this.rendezVousIds.add(rendezVousId);
     }
 }
